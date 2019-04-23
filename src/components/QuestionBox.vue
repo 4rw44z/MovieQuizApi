@@ -9,7 +9,7 @@
   <b-list-group-item v-for="(answer, index) in answers" 
 :key="index"
  @click.prevent="selectAnswer(index)"
- :class="[selectedIndex === index ? 'selected' : '']">
+    :class="answerClass(index)">
       {{ answer }}
   </b-list-group-item>
 </b-list-group>
@@ -76,6 +76,20 @@ export default {
         this.answered = true
 
         this.increment(isCorrect)
+      },
+      answerClass(index){
+          let answerClass = ''
+          if(!this.answered && this.selectedIndex === index){
+              answerClass = 'selected'
+          }
+        else if(this.answered && this.correctIndex === index){
+            answerClass = 'correct'
+        }
+        else if(this.answered && this.selectedIndex === index && this.correctIndex !== index){
+
+            answerClass = 'incorrect'
+        }
+        return answerClass
       }
   }
 };
